@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "NodeJS"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,13 +14,24 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building project...'
+                sh 'npm install'
+                sh 'npx playwright install'
             }
         }
 
-        stage('Test') {
+        stage('Run Tests') {
             steps {
-                echo 'Running tests...'
+                sh 'npx playwright test'
+            }
+        }
+
+        stage('Publish Report') {
+            steps {
+                publishHTML([
+                    reportDir: 'playwright-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Playwright Report'
+                ])
             }
         }
     }
