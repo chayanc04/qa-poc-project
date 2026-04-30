@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/chayan/qa-poc-project.git'
+                git 'https://github.com/chayanc04/qa-poc-project.git'
             }
         }
 
